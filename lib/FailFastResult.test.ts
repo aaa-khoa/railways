@@ -1,9 +1,10 @@
-import { Success, Failure } from './FailFastResult.ts'
+import { FailFastSuccess, FailFastFailure } from './FailFastResult'
 
 type ValidationErrors = 'weird name' | 'cant type' | 'martian'
+type Driver = { name: string, state: string }
 
-const validateWeirdName = ({ name } as driver) => name.indexOf('ochocinco') > -1 ? Failure<ValidationErrors>('weird name') : Success(driver)
-const validateState = ({ state } as driver) => state.indexOf('*') > -1 ? Failure<ValidationErrors>('cant type') : Success(driver)
+const validateWeirdName = (driver: Driver) => driver.name.indexOf('ochocinco') > -1 ? new FailFastFailure<Driver, ValidationErrors>('weird name') : new FailFastSuccess<Driver, ValidationErrors>(driver)
+const validateState = (driver: Driver) => driver.state.indexOf('*') > -1 ? new FailFastFailure<Driver, ValidationErrors>('cant type') : new FailFastSuccess<Driver, ValidationErrors>(driver)
 
 describe('FailFastResult', () => {
   it('works', () => {

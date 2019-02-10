@@ -1,23 +1,41 @@
 
 export type CumulativeResult<Value, Error> = CumulativeSuccess<Value, Error> | CumulativeFailure<Value, Error>
 
-export const CumulativeSuccess<Value, Error> = (value: Value) => {
-    map(transform: (success: Value) => CumulativeResult<Value,Error>) {
-        return transform(value)
+export class CumulativeSuccess<Value, Error> {
+    value
+
+    constructor(value: Value) {
+        this.value = value;
     }
 
-    fold<S,E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E) {
-        return onSuccess(value)
+    map(transform: (success: Value) => CumulativeResult<Value,Error>) {
+        return transform(this.value)
+    }
+
+    fold<S, E>(onSuccess: (s: Value) => S, onFailure: (e: Error[]) => E): S | E {
+        return onSuccess(this.value)
     }
 }
     
-export const CumulativeFailure<Value, Error> = (alongForTheRide: Value, errors: Error[]) => {
-    map(transform: (value: Value) => CumulativeResult<Value,Error>) {
-        return transform(alongForTheRide).fold((irrelevantSuccess) => CumulativeFailure(errors), (moreErrors) => errors.concat(moreErrors))
+export class CumulativeFailure<Value, Error> {
+    alongForTheRide
+    errors
+
+    constructor(alongForTheRide: Value, errors: Error[]) {
+        this.alongForTheRide = alongForTheRide
+        this.errors = errors
     }
 
-    fold<S,E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E) {
-        return onFailure(error)
+    map(transform: (value: Value) => CumulativeResult<Value, Error>): CumulativeResult<Value, Error> {
+        const firstResult: CumulativeResult<Value, Error> = transform(this.alongForTheRide)
+        return firstResult
+                .fold<CumulativeFailure<Value, Error>, CumulativeFailure<Value, Error>>(
+                    (_) => new CumulativeFailure(this.alongForTheRide, this.errors), 
+                    (moreErrors) => new CumulativeFailure(this.alongForTheRide, this.errors.concat(moreErrors)))
+    }
+
+    fold<S, E>(onSuccess: (s: Value) => S, onFailure: (e: Error[]) => E): S | E {
+        return onFailure(this.errors)
     }
 }
 

@@ -1,24 +1,36 @@
 
-export type FailFastResult<Value, Error> = Success<Value, Error> | Failure<Value, Error>
+export type FailFastResult<Value, Error> = FailFastSuccess<Value, Error> | FailFastFailure<Value, Error>
 
-export const Success<Value, Error> = (value: Value) => {
+export class FailFastSuccess<Value, Error> {
+    value
+
+    constructor(value: Value) {
+        this.value = value
+    }
     map(transform: (success: Value) => FailFastResult<Value,Error>) {
-        return transform(value)
+        return transform(this.value)
     }
 
     fold<S,E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E) {
-        return onSuccess(value)
+        return onSuccess(this.value)
     }
 }
     
-export const Failure<Value, Error> = (error: Error) => {
-    map(transform: (success: Value) => FailFastResult<Value,Error>) {
-        return Failure(error)
+export class FailFastFailure<Value, Error> {
+    error
+
+    constructor(error: Error) {
+        this.error = error
+    }
+    map(transform: (success: Value) => FailFastResult<Value,Error>): FailFastResult<Value, Error> {
+        return new FailFastFailure(this.error)
     }
 
     fold<S,E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E) {
-        return onFailure(error)
+        return onFailure(this.error)
     }
 }
+
+
 
 
