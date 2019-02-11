@@ -12,7 +12,7 @@ export class FailFastSuccess<Value, Error> {
         return transform(this.value)
     }
 
-    fold<S, E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E) {
+    fold<S, E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E): S | E {
         return onSuccess(this.value)
     }
 }
@@ -29,7 +29,7 @@ export class FailFastFailure<Value, Error> {
         return new FailFastFailure(this.error)
     }
 
-    fold<S, E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E) {
+    fold<S, E>(onSuccess: (success: Value) => S, onFailure: (error: Error) => E): S | E {
         return onFailure(this.error)
     }
 }

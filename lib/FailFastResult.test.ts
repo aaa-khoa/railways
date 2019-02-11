@@ -1,14 +1,27 @@
 import { FailFastSuccess, FailFastFailure } from './FailFastResult'
 
-type ValidationErrors = 'weird name' | 'cant type' | 'martian'
-type Driver = { name: string, state: string }
+type ValidationErrors = 'weird name' | 'special characters' | 'too long'
 
-const validateWeirdName = (driver: Driver) => driver.name.indexOf('ochocinco') > -1 ? new FailFastFailure<Driver, ValidationErrors>('weird name') : new FailFastSuccess<Driver, ValidationErrors>(driver)
-const validateState = (driver: Driver) => driver.state.indexOf('*') > -1 ? new FailFastFailure<Driver, ValidationErrors>('cant type') : new FailFastSuccess<Driver, ValidationErrors>(driver)
+const validateWeirdness = (name) => 
+  name.indexOf('ochocinco') > -1 
+    ? new FailFastFailure<string, ValidationErrors>('weird name') 
+    : new FailFastSuccess<string, ValidationErrors>(name)
+
+const validateSpecialCharacters = (name) => 
+  name.indexOf('*') > -1 
+    ? new FailFastFailure<string, ValidationErrors>('special characters') 
+    : new FailFastSuccess<string, ValidationErrors>(name)
+
+const validateLength = (name) => 
+  name.length > 20 
+    ? new FailFastFailure<string, ValidationErrors>('too long') 
+    : new FailFastSuccess<string, ValidationErrors>(name)
 
 describe('FailFastResult', () => {
   it('works', () => {
-    const result = validateWeirdName({name: 'chad ochocinco', state: 'A*Z'}).map(validateState)
+    const result = validateWeirdness('ch*d ochocinco')
+                    .map(validateSpecialCharacters)
+                    .map(validateLength)
     expect(result.fold((x) => x, (x) => x)).toEqual('weird name')
   })
 })
