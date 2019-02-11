@@ -7,7 +7,7 @@
   "author": "Desmond Pompa Alarcon Rawls <drawls@pivotal.io>",
   "license": "MIT",
   "scripts": {
-    "compile": "tsc",
+    "compile": "rm -r build/ && tsc",
     "test": "jest --env=node --colors --coverage test lib/"
   },
   "devDependencies": {
