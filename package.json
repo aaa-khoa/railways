@@ -1,29 +1,12 @@
 {
-  "name": "railways",
-  "version": "1.0.0",
-  "description": "railway-oriented programming demo",
-  "main": "index.js",
-  "repository": "git@github.com:desmondrawls/railways.git",
-  "author": "Desmond Pompa Alarcon Rawls <drawls@pivotal.io>",
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "compile": "rm -r build/ && tsc",
-    "test": "jest --env=node --colors --coverage test lib/"
+    "temp-build": "yarn workspaces run build",
+    "build": "node buildSharedLibraries.js && yarn workspaces run build"
   },
-  "devDependencies": {
-    "@types/jest": "^24.0.0",
-    "jest": "^24.1.0",
-    "ts-jest": "^23.10.5",
-    "typescript": "^3.3.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/lib/.*test\\.(ts|js)$"
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   }
 }
