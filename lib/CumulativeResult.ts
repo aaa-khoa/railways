@@ -8,7 +8,7 @@ export class CumulativeSuccess<Value, Error> {
         this.value = value
     }
 
-    map(transform: (success: Value) => CumulativeResult<Value, Error>) {
+    map(transform: (success: Value) => CumulativeResult<Value, Error>): CumulativeResult<Value, Error> {
         return transform(this.value)
     }
 

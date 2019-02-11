@@ -8,7 +8,7 @@ export class FailFastSuccess<Value, Error> {
         this.value = value
     }
 
-    map(transform: (success: Value) => FailFastResult<Value, Error>) {
+    map(transform: (success: Value) => FailFastResult<Value, Error>): FailFastResult<Value, Error> {
         return transform(this.value)
     }
 
