@@ -47,9 +47,12 @@ export class NameForm extends React.Component<{}, NameFormState> {
     const result = validateWeirdness(this.state.value)
                     .map(validateSpecialCharacters)
                     .map(validateLength) 
-    result.fold(
+    return result.fold(
       (value) => (<p>{ value } does not have any errors </p>), 
-      (value) =>  (<p> Error on {value}</p>)
+      (errors) =>  {
+        console.log(errors)
+        return errors.map(err => (<p>Error ==> {err}</p>))
+      }
     )
   }
 
