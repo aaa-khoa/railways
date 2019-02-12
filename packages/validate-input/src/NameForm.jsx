@@ -18,7 +18,6 @@ class NameForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.validateName(this.state.value)
     // error handling
     this.errors.forEach(error => console.error(error))
     alert('A name was submitted: ' + this.state.value);
@@ -35,6 +34,7 @@ class NameForm extends React.Component {
     if(name.includes('*')){
       this.errors.push('You cannot have a star in your name!')
     }
+    return this.errors.map(err => (<p>Error ==> {err}</p>))
   }
 
   render() {
@@ -45,6 +45,7 @@ class NameForm extends React.Component {
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit" value="Submit" />
+        {this.validateName(this.state.value)}
       </form>
     );
   }
