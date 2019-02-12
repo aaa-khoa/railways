@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { CumulativeFailure, CumulativeSuccess, ValidationError} from 'railways'
-import { validateWeirdness, validateSpecialCharacters, validateLength } from './validateName';
+import { validateWeirdness, validateSpecialCharacters, validateLength, validateName } from './validateName';
 import { nameValidationErrorMessage } from './nameValidationErrorMessage';
 
 type NameFormState = {
@@ -30,14 +30,17 @@ export class NameForm extends React.Component<{}, NameFormState> {
   }
 
   errors() {
-    return validateWeirdness(this.state.value)
-            .map(validateSpecialCharacters)
-            .map(validateLength) 
+    return validateName(this.state.value)
             .fold(
               (value) => (<p>{ value } does not have any errors </p>), 
               (errors) =>  errors.map(error => 
                 (<p>Error ==> {nameValidationErrorMessage(error)}</p>))
             )
+  }
+
+  disabled() {
+    return validateName(this.state.value)
+            .fold(()=>false, ()=>true)
   }
 
   render() {
@@ -47,7 +50,7 @@ export class NameForm extends React.Component<{}, NameFormState> {
           Name:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" disabled={this.disabled()}/>
         {this.errors()}
       </form>
     );
