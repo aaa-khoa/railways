@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { NameForm } from './NameForm';
+import { NameForm } from './name/NameForm';
 
 class App extends Component {
   render() {

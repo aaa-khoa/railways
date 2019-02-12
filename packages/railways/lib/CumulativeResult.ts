@@ -1,5 +1,5 @@
 export type CumulativeResult<Value, Error> = CumulativeSuccess<Value, Error> | CumulativeFailure<Value, Error>
-export type ValidationErrors = 'weird name' | 'special characters' | 'too long'
+export type ValidationError = 'weird name' | 'special characters' | 'too long'
 
 export class CumulativeSuccess<Value, Error> {
 
