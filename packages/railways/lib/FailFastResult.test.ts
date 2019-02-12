@@ -1,6 +1,4 @@
-import { FailFastSuccess, FailFastFailure } from './FailFastResult'
-
-type ValidationErrors = 'weird name' | 'special characters' | 'too long'
+import { FailFastSuccess, FailFastFailure, ValidationErrors } from './FailFastResult'
 
 const validateWeirdness = (name) => 
   name.indexOf('ochocinco') > -1 

@@ -1,4 +1,5 @@
 export type FailFastResult<Value, Error> = FailFastSuccess<Value, Error> | FailFastFailure<Value, Error>
+export type ValidationErrors = 'weird name' | 'special characters' | 'too long'
 
 export class FailFastSuccess<Value, Error> {
 

@@ -1,18 +1,16 @@
-import { CumulativeFailure, CumulativeSuccess } from "./CumulativeResult";
+import { CumulativeFailure, CumulativeSuccess, ValidationErrors } from "./CumulativeResult";
 
-type ValidationErrors = 'weird name' | 'special characters' | 'too long'
-
-const validateWeirdness = (name) => 
+export const validateWeirdness = (name) => 
   name.indexOf('ochocinco') > -1 
     ? new CumulativeFailure<string, ValidationErrors>(name, ['weird name']) 
     : new CumulativeSuccess<string, ValidationErrors>(name)
 
-const validateSpecialCharacters = (name) => 
+export const validateSpecialCharacters = (name) => 
   name.indexOf('*') > -1 
     ? new CumulativeFailure<string, ValidationErrors>(name, ['special characters']) 
     : new CumulativeSuccess<string, ValidationErrors>(name)
 
-const validateLength = (name) => 
+export const validateLength = (name) => 
   name.length > 20 
     ? new CumulativeFailure<string, ValidationErrors>(name, ['too long']) 
     : new CumulativeSuccess<string, ValidationErrors>(name)
