@@ -4,7 +4,7 @@ export type ValidationError =
     'weird name' 
     | 'special characters' 
     | 'too long' 
-    // | 'Capital letters'
+    | 'Capital letters'
 
 const contains = search => subject => subject.indexOf(search) > -1
 const longerThan = limit => subject => subject.length > limit
@@ -22,5 +22,5 @@ export const validateLength = (name) =>
 export const validateName = (name) => {
     return validateWeirdness(name)
             .map(validateSpecialCharacters)
-            .map(validateLength) 
+            .map(validateLength)
 }

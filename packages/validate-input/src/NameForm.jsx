@@ -23,7 +23,7 @@ class NameForm extends React.Component {
   }
 
   validateName() {
-    return this.errors().map(err => (<p>Error ==> {err}</p>))
+    return this.errors().map(err => (<p style={{color: 'red', fontWeight: 'bolder'}}>Error ==> {err}</p>))
   }
 
   errors() {

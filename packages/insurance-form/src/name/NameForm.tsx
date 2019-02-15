@@ -34,7 +34,7 @@ export class NameForm extends React.Component<{}, NameFormState> {
             .fold(
               (value) => (<p>{ value } does not have any errors </p>), 
               (errors) =>  errors.map(error => 
-                (<p>Error ==> {nameValidationErrorMessage(error)}</p>))
+                (<p style={{color: 'red', fontWeight: 'bolder'}}>Error ==> {nameValidationErrorMessage(error)}</p>))
             )
   }
 

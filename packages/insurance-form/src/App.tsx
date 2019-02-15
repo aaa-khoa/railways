@@ -6,7 +6,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <h1>Railways</h1>
         <NameForm />
+        <p>------Other Components-------</p>
+        Last name <input type="text" value="some last name" />
+        <p>some tooltip</p>
+        <button>Submit All</button>
       </div>
     );
   }

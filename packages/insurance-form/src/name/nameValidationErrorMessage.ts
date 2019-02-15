@@ -7,7 +7,9 @@ export const nameValidationErrorMessage = (error: ValidationError) => {
         case 'special characters':
             return 'names may only include letters, spaces, and hypens'
         case 'too long':
-            return 'please use a shorter name'
+            return 'please use a shorter name'   
+        case 'Capital letters':
+            return 'please use a shorter name'   
         default:
             assertNever(error)
     }
