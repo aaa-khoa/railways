@@ -1,6 +1,12 @@
 export type CumulativeResult<Value, Error> = CumulativeSuccess<Value, Error> | CumulativeFailure<Value, Error>
 export type ValidationError = 'weird name' | 'special characters' | 'too long'
 
+/**
+ * An object that takes in a value and current list of errors
+ * @map takes in the values and errors and returns the same CumulativeResult object back so it can be composed with other checks
+ * @fold takes in an onSuccess and an onError function. It evalutes the current state of the CumulativeResult object and invokes the appropriate callback (success or failure).
+ *    It returns the value if successful or the error array on failure.
+ */
 export class CumulativeSuccess<Value, Error> {
 
     readonly value: Value
@@ -18,6 +24,13 @@ export class CumulativeSuccess<Value, Error> {
     }
 }
 
+/**
+ * An object that takes in a value and current list of errors
+ * @map takes in the values and errors and returns the same CumulativeResult object back so it can be composed with other checks,
+ *   since this is CUMULATIVE, we need to add previous errors to the errors list
+ * @fold takes in an onSuccess and an onError function. It evalutes the current state of the CumulativeResult object and invokes the appropriate callback (success or failure).
+ *    It returns the value if successful or the error array on failure.
+ */
 export class CumulativeFailure<Value, Error> {
 
     readonly alongForTheRide: Value
